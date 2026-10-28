@@ -1,0 +1,1683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KEYFORWIN - Exclusive Casino & CS2 Bonuses</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #07080c;
+      --card-bg: rgba(24, 25, 32, 0.65);
+      --card-border: rgba(38, 40, 53, 0.8);
+      --accent-purple: #7c3aed;
+      --accent-pink: #ec4899;
+      --accent-orange: #f97316;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --green-check: #10b981;
+      --gold-star: #fbbf24;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      outline: none !important;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 20px 30px 20px;
+      position: relative;
+      overflow-x: hidden;
+      user-select: none;
+    }
+
+    /* Dynamic Neon Gradient Background */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      background: 
+        radial-gradient(circle at 15% 20%, rgba(124, 58, 237, 0.25) 0%, transparent 45%),
+        radial-gradient(circle at 85% 30%, rgba(236, 72, 153, 0.22) 0%, transparent 45%),
+        radial-gradient(circle at 50% 80%, rgba(249, 115, 22, 0.14) 0%, transparent 55%),
+        radial-gradient(circle at 90% 85%, rgba(168, 85, 247, 0.2) 0%, transparent 45%),
+        linear-gradient(rgba(124, 58, 237, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(236, 72, 153, 0.03) 1px, transparent 1px);
+      background-size: cover, cover, cover, cover, 60px 60px, 60px 60px;
+      will-change: transform;
+    }
+
+    /* Canvas Layer for Floating Symbols (Hardware Accelerated) */
+    #interactive-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 2;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    /* Transparent Header */
+    .header-container {
+      width: 100%;
+      max-width: 1550px;
+      text-align: center;
+      margin: 30px 0 25px 0;
+      z-index: 5;
+      position: relative;
+    }
+
+    @keyframes brandGlowPulse {
+      0% { filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.4)); }
+      50% { filter: drop-shadow(0 0 22px rgba(236, 72, 153, 0.8)); }
+      100% { filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.4)); }
+    }
+
+    .brand-title {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(135deg, #c084fc, #f472b6, #fb923c);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: inline-block;
+      animation: brandGlowPulse 3s infinite ease-in-out;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: clamp(0.95rem, 2vw, 1.25rem);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    /* 18+ Age & Country Verification Overlay */
+    .age-gate-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(7, 8, 12, 0.96);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      padding: 20px;
+    }
+
+    .age-gate-box {
+      background-color: #181920;
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 35px 30px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      position: relative;
+      z-index: 10000;
+    }
+
+    .age-badge-large {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: #fff;
+      font-size: 1.5rem;
+      font-weight: 900;
+      width: 55px;
+      height: 55px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
+
+    .age-gate-title {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .age-gate-text {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .checkbox-container {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      padding: 12px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+
+    .checkbox-container:hover {
+      border-color: rgba(124, 58, 237, 0.4);
+    }
+
+    .checkbox-container input[type="checkbox"] {
+      margin-top: 3px;
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-purple);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .checkbox-label {
+      font-size: 0.85rem;
+      color: #d1d5db;
+      line-height: 1.4;
+      cursor: pointer;
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .checkbox-label strong {
+      color: #fff;
+    }
+
+    .info-icon-wrapper {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      background-color: rgba(239, 68, 68, 0.2);
+      border: 1px solid #ef4444;
+      color: #ef4444;
+      border-radius: 50%;
+      font-size: 0.7rem;
+      font-weight: 900;
+      font-style: normal;
+      cursor: help;
+      flex-shrink: 0;
+    }
+
+    /* Fixed Centered Tooltip */
+    .info-icon-wrapper .tooltip-text {
+      visibility: hidden;
+      width: 250px;
+      background-color: #1f222e;
+      color: #e5e7eb;
+      text-align: left;
+      border-radius: 10px;
+      padding: 12px 14px;
+      position: fixed;
+      z-index: 20000;
+      bottom: 50%;
+      left: 50%;
+      transform: translate(-50%, 50%);
+      opacity: 0;
+      transition: opacity 0.2s ease-in-out;
+      font-size: 0.8rem;
+      font-style: normal;
+      font-weight: 500;
+      border: 1px solid rgba(124, 58, 237, 0.4);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.8);
+      pointer-events: none;
+    }
+
+    .info-icon-wrapper:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .age-gate-buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+    }
+
+    .btn-age-confirm {
+      background: linear-gradient(135deg, #7c3aed, #ec4899);
+      color: #fff;
+      border: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      flex: 1;
+      transition: transform 0.2s, opacity 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+    }
+
+    .btn-age-confirm:disabled {
+      background: #2d2f3d;
+      color: #6b7280;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none !important;
+      opacity: 0.6;
+    }
+
+    .btn-age-confirm:not(:disabled):hover {
+      opacity: 0.95;
+      transform: scale(1.02);
+    }
+
+    .btn-age-deny {
+      background-color: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--card-border);
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      flex: 1;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .btn-age-deny:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
+
+    /* Container & View management */
+    .container {
+      width: 100%;
+      max-width: 1550px;
+      z-index: 5;
+      position: relative;
+    }
+
+    .view-section {
+      display: none;
+      width: 100%;
+      max-width: 1550px;
+      z-index: 5;
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .view-section.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 30px;
+    }
+
+    .tab-btn {
+      background-color: rgba(24, 25, 32, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 12px 28px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-btn:hover {
+      color: #fff;
+      border-color: rgba(124, 58, 237, 0.5);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #7c3aed, #ec4899);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
+    }
+
+    /* Tab Content Visibility */
+    .tab-content {
+      display: none;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .tab-content.active {
+      display: grid;
+    }
+
+    /* Entrance animation */
+    @keyframes smoothFadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(35px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Casino & CS2 Cards */
+    .casino-card {
+      background-color: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 24px 30px;
+      position: relative;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+      display: grid;
+      grid-template-columns: 150px 1fr 165px;
+      gap: 24px;
+      align-items: center;
+      min-height: 220px;
+      animation: smoothFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+    }
+
+    .tab-content.active .casino-card:nth-child(1) { animation-delay: 0.1s; }
+    .tab-content.active .casino-card:nth-child(2) { animation-delay: 0.2s; }
+    .tab-content.active .casino-card:nth-child(3) { animation-delay: 0.3s; }
+    .tab-content.active .casino-card:nth-child(4) { animation-delay: 0.4s; }
+    .tab-content.active .casino-card:nth-child(5) { animation-delay: 0.5s; }
+
+    .casino-card:hover {
+      transform: translateY(-2px);
+      background-color: rgba(24, 25, 32, 0.8);
+      border-color: rgba(124, 58, 237, 0.5);
+      box-shadow: 0 10px 30px -10px rgba(124, 58, 237, 0.3);
+    }
+
+    /* Rating & Hot Badge */
+    .rating-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #fff;
+      z-index: 6;
+    }
+
+    .rating-badge span.ag-label {
+      color: var(--text-muted);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .rating-score {
+      color: var(--gold-star);
+    }
+
+    .hot-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #fca5a5;
+      z-index: 6;
+    }
+
+    .flame-icon {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      vertical-align: middle;
+      display: inline-block;
+    }
+
+    /* Logo Container Styling */
+    .logo-container {
+      width: 150px;
+      height: 110px;
+      background: linear-gradient(135deg, rgba(45, 19, 68, 0.8), rgba(25, 9, 40, 0.8));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      overflow: hidden;
+      position: relative;
+      z-index: 6;
+    }
+
+    .logo-container img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .logo-container.winspirit-bg {
+      background: linear-gradient(135deg, rgba(45, 19, 68, 0.8), rgba(25, 9, 40, 0.8));
+      padding: 0;
+    }
+
+    .logo-container.winspirit-bg img {
+      width: 120%;
+      height: 120%;
+      object-fit: cover;
+      transform: scale(1.2);
+      border-radius: 11px;
+      mix-blend-mode: screen;
+      filter: brightness(1.1) contrast(1.1);
+    }
+
+    .logo-container.snatch-large img {
+      max-width: 175%;
+      max-height: 175%;
+      transform: scale(1.75);
+    }
+
+    .logo-container.iris-bg img {
+      filter: invert(1) hue-rotate(180deg) brightness(1.2) contrast(1.1);
+      mix-blend-mode: screen;
+      transform: scale(1.35);
+      max-width: 135%;
+      max-height: 135%;
+    }
+
+    .logo-container.plg-bg {
+      background: linear-gradient(135deg, rgba(45, 19, 68, 0.8), rgba(25, 9, 40, 0.8));
+      padding: 0;
+    }
+
+    .logo-container.plg-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 11px;
+      mix-blend-mode: screen;
+      filter: contrast(115%) brightness(1.1);
+    }
+
+    .logo-container.hellcase-bg {
+      background: linear-gradient(135deg, rgba(45, 19, 68, 0.8), rgba(25, 9, 40, 0.8));
+      padding: 6px;
+    }
+
+    .logo-container.hellcase-bg img {
+      width: 110%;
+      height: 110%;
+      object-fit: cover;
+      border-radius: 11px;
+      mix-blend-mode: lighten;
+      filter: contrast(130%) brightness(1.2);
+    }
+
+    .logo-container.csgoroll-bg {
+      background: linear-gradient(135deg, rgba(45, 19, 68, 0.8), rgba(25, 9, 40, 0.8));
+      padding: 6px;
+    }
+
+    .logo-container.csgoroll-bg img {
+      width: 115%;
+      height: 115%;
+      object-fit: contain;
+      transform: scale(1.15);
+    }
+
+    .logo-container.keydrop-bg {
+      background: linear-gradient(135deg, rgba(45, 19, 68, 0.8), rgba(25, 9, 40, 0.8));
+      padding: 0px;
+    }
+
+    .logo-container.keydrop-bg img {
+      width: 165%;
+      height: 165%;
+      object-fit: contain;
+      transform: scale(1.65);
+    }
+
+    .logo-container.clash-bg {
+      background: linear-gradient(135deg, rgba(45, 19, 68, 0.8), rgba(25, 9, 40, 0.8));
+      padding: 6px;
+    }
+
+    .logo-container.clash-bg img {
+      width: 125%;
+      height: 125%;
+      object-fit: contain;
+      transform: scale(1.25);
+    }
+
+    /* Promo Code Box */
+    .promo-code-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px dashed var(--accent-pink);
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      width: fit-content;
+      margin-top: 4px;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s ease;
+      position: relative;
+      z-index: 6;
+    }
+
+    .promo-code-box:hover {
+      background: rgba(236, 72, 153, 0.15);
+      border-color: #f472b6;
+      transform: translateY(-1px);
+    }
+
+    .promo-code-box strong {
+      color: #fff;
+      letter-spacing: 1px;
+    }
+
+    .copy-hint {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-left: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .promo-code-box:hover .copy-hint {
+      background: var(--accent-pink);
+      color: #fff;
+    }
+
+    /* Info Section */
+    .casino-info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      justify-content: center;
+      height: 100%;
+      position: relative;
+      z-index: 6;
+    }
+
+    .casino-name {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding-right: 130px;
+      white-space: nowrap;
+    }
+
+    .bonus-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #e5e7eb;
+      line-height: 1.3;
+    }
+
+    .bonus-note {
+      font-size: 0.8rem;
+      color: #fbbf24;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+    }
+
+    .what-we-like {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .what-we-like li {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      line-height: 1.35;
+    }
+
+    .what-we-like li::before {
+      content: "✓";
+      color: var(--green-check);
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+
+    .highlight-daily {
+      color: #fbbf24 !important;
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(251, 191, 36, 0.3);
+    }
+    
+    .highlight-daily::before {
+      color: #fbbf24 !important;
+    }
+
+    /* CTA Button */
+    .cta-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      position: relative;
+      z-index: 6;
+    }
+
+    .btn-claim {
+      background: linear-gradient(135deg, #7c3aed, #ec4899);
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 15px 18px;
+      border-radius: 12px;
+      transition: all 0.2s ease;
+      text-align: center;
+      white-space: nowrap;
+      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+      display: block;
+      width: 100%;
+    }
+
+    .btn-claim:hover {
+      opacity: 0.95;
+      transform: scale(1.03);
+      box-shadow: 0 6px 20px rgba(236, 72, 153, 0.4);
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      border-top: 1px solid var(--card-border);
+      padding-top: 20px;
+      grid-column: 1 / -1;
+      width: 100%;
+      position: relative;
+      z-index: 6;
+    }
+
+    .disclaimer {
+      max-width: 650px;
+      margin: 0 auto 12px;
+    }
+
+    .age-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ef4444;
+      color: #fff;
+      font-weight: 800;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    .footer-links {
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      font-size: 0.85rem;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      text-decoration: underline;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: #fff;
+    }
+
+    /* Toast Notification */
+    .toast-notification {
+      position: fixed;
+      bottom: 35px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.5);
+      z-index: 30000;
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.35s;
+      opacity: 0;
+      pointer-events: none;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .toast-notification.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Scroll to Top Button */
+    .scroll-top-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      width: 45px;
+      height: 45px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      z-index: 99;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .scroll-top-btn.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .scroll-top-btn:hover {
+      background: linear-gradient(135deg, #7c3aed, #ec4899);
+      border-color: transparent;
+      transform: translateY(-3px);
+    }
+
+    /* Cookie Banner */
+    .cookie-banner {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #181920;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 20px;
+      max-width: 360px;
+      width: calc(100% - 40px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      z-index: 9998;
+      display: none;
+      animation: smoothFadeInUp 0.6s ease forwards;
+    }
+    .cookie-banner p {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+    .cookie-banner strong {
+      color: #fff;
+    }
+    .btn-cookie-accept {
+      background: linear-gradient(135deg, #7c3aed, #ec4899);
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      width: 100%;
+      transition: opacity 0.2s;
+    }
+    .btn-cookie-accept:hover {
+      opacity: 0.9;
+    }
+
+    /* Sub-pages Styles */
+    .subpage-container {
+      background-color: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 40px;
+      margin-top: 20px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+    }
+    .subpage-title {
+      font-size: 2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .subpage-content h3 {
+      color: #fff;
+      font-size: 1.2rem;
+      margin-top: 20px;
+      margin-bottom: 8px;
+    }
+    .subpage-content p, .subpage-content li {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+    .subpage-content ul {
+      padding-left: 20px;
+      margin-bottom: 15px;
+    }
+    .btn-back {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: #fff;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-bottom: 25px;
+      transition: background 0.2s;
+    }
+    .btn-back:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Responsive Mobile & Landscape Layout */
+    @media (max-width: 900px) {
+      .tab-content {
+        grid-template-columns: 1fr;
+      }
+
+      .casino-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 16px;
+        min-height: auto;
+        padding-top: 60px;
+      }
+
+      .rating-badge {
+        top: 12px;
+        right: 12px;
+      }
+
+      .hot-badge {
+        top: 12px;
+        left: 12px;
+      }
+
+      .logo-container {
+        margin: 0 auto;
+      }
+
+      .casino-name {
+        padding-right: 0;
+      }
+
+      .promo-code-box {
+        margin: 0 auto;
+      }
+
+      .what-we-like {
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .btn-claim {
+        width: 100%;
+      }
+
+      .age-gate-buttons {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-height: 500px) and (orientation: landscape) {
+      .age-gate-box {
+        max-height: 85vh;
+        overflow-y: auto;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Animated Gradient Layer -->
+  <div class="bg-animation"></div>
+
+  <!-- Interactive Canvas Overlay for Floating Symbols -->
+  <canvas id="interactive-canvas"></canvas>
+
+  <!-- Transparent Header -->
+  <header class="header-container">
+    <h1 class="brand-title">KEYFORWIN</h1>
+    <p class="subtitle">Exclusive Casino & CS2 Bonuses</p>
+  </header>
+
+  <!-- 18+ & COUNTRY RESTRICTION VERIFICATION MODAL -->
+  <div id="ageGate" class="age-gate-overlay">
+    <div class="age-gate-box">
+      <div class="age-badge-large">18+</div>
+      <h2 class="age-gate-title">Age & Country Verification</h2>
+      <p class="age-gate-text">Please confirm your age and location to access this website.</p>
+      
+      <div class="checkbox-group">
+        <label class="checkbox-container">
+          <input type="checkbox" id="ageCheck" onchange="toggleEnterButton()">
+          <span class="checkbox-label">
+            I confirm that I am <strong>at least 18 years old</strong>.
+          </span>
+        </label>
+
+        <label class="checkbox-container">
+          <input type="checkbox" id="countryCheck" onchange="toggleEnterButton()">
+          <span class="checkbox-label">
+            I confirm that I am not from a restricted country.
+            <span class="info-icon-wrapper" title="">i
+              <span class="tooltip-text"><strong>Restricted Countries:</strong><br>Hungary, USA, UK, France, Netherlands, Curaçao, Australia, etc.</span>
+            </span>
+          </span>
+        </label>
+      </div>
+
+      <div class="age-gate-buttons">
+        <button id="enterBtn" class="btn-age-confirm" onclick="acceptAge()" disabled>CONFIRM & ENTER</button>
+        <button class="btn-age-deny" onclick="denyAge()">I AM UNDER 18</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COOKIE BANNER -->
+  <div id="cookieBanner" class="cookie-banner">
+    <p>We use cookies to ensure you get the best experience on our website. By continuing, you agree to our <strong>Cookie Policy</strong>.</p>
+    <button class="btn-cookie-accept" onclick="acceptCookies()">ACCEPT COOKIES</button>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast-notification">Copied to clipboard!</div>
+
+  <!-- SCROLL TO TOP BUTTON -->
+  <div id="scrollToTopBtn" class="scroll-top-btn" onclick="scrollToTop()" title="Back to top">↑</div>
+
+
+  <!-- MAIN APP VIEW -->
+  <div id="main-view" class="view-section active">
+    <div class="container">
+      <!-- Navigation Tabs -->
+      <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('casino', event)">🎰 CASINO</button>
+        <button class="tab-btn" onclick="switchTab('cs2', event)">🔫 CS2 SITES</button>
+      </div>
+
+      <!-- CASINO TAB CONTENT -->
+      <div id="casino-tab" class="tab-content active">
+
+        <!-- 1. FreeSpinz Casino -->
+        <div class="casino-card">
+          <div class="hot-badge">
+            <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f525/512.gif" class="flame-icon" alt="🔥">
+            HOT BONUS
+          </div>
+          
+          <div class="rating-badge">
+            <span class="ag-label">AskGamblers</span>
+            <span class="rating-score">★ 8.9/10</span>
+          </div>
+          
+          <div class="logo-container">
+            <img src="https://static3.smr.vc/483d766d994ae2ada3e144-Asset270.png" alt="FreeSpinz Casino">
+          </div>
+
+          <div class="casino-info">
+            <div class="casino-name">FreeSpinz Casino</div>
+            <div class="bonus-title">120% deposit bonus for 20€</div>
+            <div class="promo-code-box" onclick="copyCode('LEVIX', this)">
+              Code: <strong>LEVIX</strong> <span class="copy-hint">Copy</span>
+            </div>
+            <ul class="what-we-like">
+              <li>Good variety of payment methods</li>
+              <li>24/7 live chat</li>
+              <li>High withdrawal limits</li>
+            </ul>
+          </div>
+
+          <div class="cta-container">
+            <a href="https://go.aff.freespinz.com/levix" target="_blank" rel="noopener noreferrer" class="btn-claim">CLAIM BONUS</a>
+          </div>
+        </div>
+
+        <!-- 2. WinSpirit Casino -->
+        <div class="casino-card">
+          <div class="rating-badge">
+            <span class="ag-label">AskGamblers</span>
+            <span class="rating-score">★ 9.1/10</span>
+          </div>
+
+          <div class="logo-container winspirit-bg">
+            <img src="https://img.magyarcasino.com/400x210/casino/winspirit.webp" alt="WinSpirit Casino">
+          </div>
+
+          <div class="casino-info">
+            <div class="casino-name">WinSpirit Casino</div>
+            <div class="bonus-title">100% Bonus + 100 Free Spins for min. €20 deposit</div>
+            <ul class="what-we-like">
+              <li>Highly varied bonus selection</li>
+              <li>Fast withdrawal request processing</li>
+              <li>Excellent games variety</li>
+            </ul>
+          </div>
+
+          <div class="cta-container">
+            <a href="https://winspirit-game.com/c/7b39fc80" target="_blank" rel="noopener noreferrer" class="btn-claim">CLAIM BONUS</a>
+          </div>
+        </div>
+
+        <!-- 3. Snatch Casino -->
+        <div class="casino-card">
+          <div class="rating-badge">
+            <span class="ag-label">AskGamblers</span>
+            <span class="rating-score">★ 9.4/10</span>
+          </div>
+          
+          <div class="logo-container snatch-large">
+            <img src="https://www.casinobankingmethods.com/wp-content/uploads/2024/10/Snatch-Casino.svg" alt="Snatch Casino">
+          </div>
+
+          <div class="casino-info">
+            <div class="casino-name">Snatch Casino</div>
+            <div class="bonus-title">200% Bonus + 100 Free Spins for min. €9 deposit</div>
+            <div class="bonus-note highlight-daily">Exclusive: €20+ deposit = +50 Extra FS!</div>
+            <ul class="what-we-like">
+              <li>Quick registration, while KYC can be done upon withdrawal</li>
+              <li>Deposit limits and self-exclusion are at your reach</li>
+              <li>Live chat is working 24/7</li>
+              <li>All complaints on AskGamblers are resolved</li>
+            </ul>
+          </div>
+
+          <div class="cta-container">
+            <a href="https://snatchcasino5.io?r=hVbaFDpV" target="_blank" rel="noopener noreferrer" class="btn-claim">CLAIM BONUS</a>
+          </div>
+        </div>
+
+        <!-- 4. Iris Casino -->
+        <div class="casino-card">
+          <div class="rating-badge">
+            <span class="ag-label">AskGamblers</span>
+            <span class="rating-score">★ 6.8/10</span>
+          </div>
+
+          <div class="logo-container iris-bg">
+            <img src="https://www.reviewed-casinos.com/resources/assets/iris-casino-logo.png" alt="Iris Casino">
+          </div>
+
+          <div class="casino-info">
+            <div class="casino-name">Iris Casino</div>
+            <div class="bonus-title">125% First Deposit Bonus for min. €15 deposit</div>
+            <ul class="what-we-like">
+              <li>Fast withdrawals</li>
+              <li>24/7 live chat</li>
+              <li>Good variety of responsible gambling tools</li>
+            </ul>
+          </div>
+
+          <div class="cta-container">
+            <a href="https://iris-contest.com/start/registration?refcode=NP8TN" target="_blank" rel="noopener noreferrer" class="btn-claim">CLAIM BONUS</a>
+          </div>
+        </div>
+
+        <!-- 5. PLG.BET (Casino Tab) -->
+        <div class="casino-card">
+          <div class="logo-container plg-bg">
+            <img src="https://www.allkeyshop.com/blog/wp-content/uploads/buy-plg-bet-compare-prices.jpg" alt="PLG.BET">
+          </div>
+
+          <div class="casino-info">
+            <div class="casino-name">PLG.BET</div>
+            <div class="bonus-title">Free $0.50 Balance</div>
+            <div class="promo-code-box" onclick="copyCode('LEVIX', this)">
+              Code: <strong>LEVIX</strong> <span class="copy-hint">Copy</span>
+            </div>
+            <ul class="what-we-like">
+              <li>Skins / Crypto / Card deposit & withdraw</li>
+            </ul>
+          </div>
+
+          <div class="cta-container">
+            <a href="https://plg.bet/?r=LEVIX" target="_blank" rel="noopener noreferrer" class="btn-claim">CLAIM BONUS</a>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- CS2 TAB CONTENT -->
+      <div id="cs2-tab" class="tab-content">
+
+        <!-- 1. PLG.BET (CS2 Tab) -->
+        <div class="casino-card">
+          <div class="logo-container plg-bg">
+            <img src="https://www.allkeyshop.com/blog/wp-content/uploads/buy-plg-bet-compare-prices.jpg" alt="PLG.BET">
+          </div>
+
+          <div class="casino-info">
+            <div class="casino-name">PLG.BET</div>
+            <div class="bonus-title">Free $0.50 Balance</div>
+            <div class="promo-code-box" onclick="copyCode('LEVIX', this)">
+              Code: <strong>LEVIX</strong> <span class="copy-hint">Copy</span>
+            </div>
+            <ul class="what-we-like">
+              <li>Skins / Crypto / Card deposit & withdraw</li>
+            </ul>
+          </div>
+
+          <div class="cta-container">
+            <a href="https://plg.bet/?r=LEVIX" target="_blank" rel="noopener noreferrer" class="btn-claim">CLAIM BONUS</a>
+          </div>
+        </div>
+
+        <!-- 2. Hellcase -->
+        <div class="casino-card">
+          <div class="logo-container hellcase-bg">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZTKsIhoxQLggyVS6Wd7lrWPWGKMPx1beKZbH6rD9kStypUs2uGPnekoi0&s=10" alt="Hellcase">
+          </div>
+
+          <div class="casino-info">
+            <div class="casino-name">Hellcase</div>
+            <div class="bonus-title">10% Deposit Bonus + $0.30 Free Balance</div>
+            <div class="promo-code-box" onclick="copyCode('LEVIX', this)">
+              Code: <strong>LEVIX</strong> <span class="copy-hint">Copy</span>
+            </div>
+            <ul class="what-we-like">
+              <li>Wide variety of deposit methods</li>
+              <li>Various events and rewards</li>
+              <li class="highlight-daily">Free daily case</li>
+              <li>Level system with gifts</li>
+            </ul>
+          </div>
+
+          <div class="cta-container">
+            <a href="https://hellpromo.com/flevix" target="_blank" rel="noopener noreferrer" class="btn-claim">CLAIM BONUS</a>
+          </div>
+        </div>
+
+        <!-- 3. CSGORoll -->
+        <div class="casino-card">
+          <div class="logo-container csgoroll-bg">
+            <img src="https://sb-asset.csgoroll.com/f/290022327772222/700x475/ce62930313/halloween-csgr-logo.svg" alt="CSGORoll">
+          </div>
+
+          <div class="casino-info">
+            <div class="casino-name">CSGORoll</div>
+            <div class="bonus-title">3 Free Cases + 5% Deposit Bonus</div>
+            <div class="promo-code-box" onclick="copyCode('LEVIX', this)">
+              Code: <strong>LEVIX</strong> <span class="copy-hint">Copy</span>
+            </div>
+            <ul class="what-we-like">
+              <li>Wide variety of deposit methods, including skins with instant crediting</li>
+              <li class="highlight-daily">Free daily case</li>
+            </ul>
+          </div>
+
+          <div class="cta-container">
+            <a href="https://www.csgoroll.com/r/LEVIX" target="_blank" rel="noopener noreferrer" class="btn-claim">CLAIM BONUS</a>
+          </div>
+        </div>
+
+        <!-- 4. KeyDrop -->
+        <div class="casino-card">
+          <div class="rating-badge">
+            <span class="ag-label">Trustpilot</span>
+            <span class="rating-score">★ 4.8/5</span>
+          </div>
+
+          <div class="logo-container keydrop-bg">
+            <img src="https://cs2pulse.com/wp-content/uploads/2021/11/Keydrop.png" alt="KeyDrop">
+          </div>
+
+          <div class="casino-info">
+            <div class="casino-name">KeyDrop</div>
+            <div class="bonus-title">20% Deposit Bonus + $0.50 Free Balance</div>
+            <div class="promo-code-box" onclick="copyCode('LOLOSKACSA', this)">
+              Code: <strong>LOLOSKACSA</strong> <span class="copy-hint">Copy</span>
+            </div>
+            <ul class="what-we-like">
+              <li>Wide variety of deposit methods, including skins with instant crediting</li>
+              <li>Various events and rewards</li>
+              <li class="highlight-daily">Free daily cases</li>
+              <li>Level system with gifts</li>
+            </ul>
+          </div>
+
+          <div class="cta-container">
+            <a href="https://kd.link/?code=LOLOSKACSA" target="_blank" rel="noopener noreferrer" class="btn-claim">CLAIM BONUS</a>
+          </div>
+        </div>
+
+        <!-- 5. Clash.gg -->
+        <div class="casino-card">
+          <div class="logo-container clash-bg">
+            <img src="https://cs2pulse.com/wp-content/uploads/2024/05/ClashGG.png" alt="Clash.gg">
+          </div>
+
+          <div class="casino-info">
+            <div class="casino-name">Clash.gg</div>
+            <div class="bonus-title">3 Free Cases + 5% Deposit Bonus</div>
+            <div class="promo-code-box" onclick="copyCode('LEVIX', this)">
+              Code: <strong>LEVIX</strong> <span class="copy-hint">Copy</span>
+            </div>
+            <ul class="what-we-like">
+              <li>Wide variety of deposit methods</li>
+              <li class="highlight-daily">Daily free cases</li>
+              <li>CS2 & Crypto withdraw options</li>
+            </ul>
+          </div>
+
+          <div class="cta-container">
+            <a href="https://clash.gg/r/LEVIX" target="_blank" rel="noopener noreferrer" class="btn-claim">CLAIM BONUS</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="disclaimer">
+          <span class="age-badge">18+</span>
+          Gamble Responsibly. Gambling involves risk. Please play responsibly and only bet what you can afford to lose. Bonus terms and conditions apply to each respective offer.
+        </div>
+        <div class="footer-links">
+          <a onclick="switchView('terms')">Terms of Use</a>
+          <a onclick="switchView('gambleaware')">GambleAware & Support</a>
+        </div>
+        <div>&copy; 2026 KEYFORWIN. All rights reserved.</div>
+      </footer>
+    </div>
+  </div>
+
+
+  <!-- TERMS OF USE VIEW -->
+  <div id="terms-view" class="view-section">
+    <div class="subpage-container">
+      <button class="btn-back" onclick="switchView('main')">← Back to Home</button>
+      <h2 class="subpage-title">Terms of Use</h2>
+      <div class="subpage-content">
+        <p>Welcome to KEYFORWIN. By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
+        
+        <h3>1. Age Restriction & Eligibility</h3>
+        <p>You must be at least 18 years of age (or the legal age of majority in your jurisdiction) to use this website. By using our site, you warrant that you meet this age requirement and that online gambling is legal in your country of residence.</p>
+
+        <h3>2. Affiliate Partnerships & Bonuses</h3>
+        <p>KEYFORWIN is an affiliate review and bonus platform. We provide promotional codes and referral links to third-party online casinos and CS2 service providers. We may earn a commission when users register or deposit through our links, at absolutely no additional cost to you.</p>
+
+        <h3>3. Limitation of Liability</h3>
+        <p>We do not operate any of the gambling or skin-trading platforms listed on this site. We accept no liability for any financial losses, disputes, or issues you may experience with third-party websites. Always read their respective terms and conditions.</p>
+
+        <h3>4. Responsible Gambling</h3>
+        <p>Gambling can be addictive. Please play responsibly. Never gamble with money you cannot afford to lose, and treat gaming as a form of entertainment rather than an income source.</p>
+
+        <h3>5. Modifications</h3>
+        <p>We reserve the right to change these terms, conditions, and notices under which our services are offered at any time without prior notice.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- GAMBLEAWARE & SUPPORT VIEW -->
+  <div id="gambleaware-view" class="view-section">
+    <div class="subpage-container">
+      <button class="btn-back" onclick="switchView('main')">← Back to Home</button>
+      <h2 class="subpage-title">Responsible Gambling & Support</h2>
+      <div class="subpage-content">
+        <p>Gambling should always remain an enjoyable form of entertainment. If you feel that gambling is taking over your life or causing financial strain, help is available immediately.</p>
+        
+        <h3>Tips for Safe Gaming</h3>
+        <ul>
+          <li>Set a strict budget and time limit before you start playing.</li>
+          <li>Never chase your losses.</li>
+          <li>Do not borrow money to gamble.</li>
+          <li>Take regular breaks and balance gaming with other hobbies.</li>
+        </ul>
+
+        <h3>External Support Organizations</h3>
+        <p>If you need professional assistance or guidance regarding gambling addiction, please visit these recognized organizations:</p>
+        <ul>
+          <li><strong>GambleAware:</strong> <a href="https://www.begambleaware.org" target="_blank" style="color: var(--accent-pink);">begambleaware.org</a></li>
+          <li><strong>GamCare:</strong> <a href="https://www.gamcare.org.uk" target="_blank" style="color: var(--accent-pink);">gamcare.org.uk</a></li>
+          <li><strong>Gamblers Anonymous:</strong> <a href="https://www.gamblersanonymous.org" target="_blank" style="color: var(--accent-pink);">gamblersanonymous.org</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    /* Super-Smooth Canvas Background */
+    const canvas = document.getElementById('interactive-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      ctx.scale(dpr, dpr);
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const charList = ['🍀', '🎰', '♠', '💎', '🎲', '👑', '7️⃣', '🪙', '♥️', '🃏', '♦️', '♣️'];
+    const colors = ['rgba(124, 58, 237, 0.35)', 'rgba(236, 72, 153, 0.35)', 'rgba(249, 115, 22, 0.35)', 'rgba(251, 191, 36, 0.35)', 'rgba(168, 85, 247, 0.35)'];
+    
+    class FloatingSymbol {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.char = charList[Math.floor(Math.random() * charList.length)];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.size = Math.floor(Math.random() * 35) + 30;
+        
+        this.x = Math.random() * window.innerWidth;
+        this.y = Math.random() * window.innerHeight;
+
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 0.4 + 0.2;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+
+        this.rotation = Math.random() * Math.PI * 2;
+        this.vRot = (Math.random() - 0.5) * 0.008;
+        this.opacity = Math.random() * 0.2 + 0.15;
+        this.glow = 0;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.rotation += this.vRot;
+
+        const margin = 80;
+        if (this.x < -margin) this.x = window.innerWidth + margin;
+        if (this.x > window.innerWidth + margin) this.x = -margin;
+        if (this.y < -margin) this.y = window.innerHeight + margin;
+        if (this.y > window.innerHeight + margin) this.y = -margin;
+
+        if (this.glow > 0) this.glow -= 0.02;
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.font = `${this.size}px 'Inter', sans-serif`;
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = Math.min(1, this.opacity + this.glow);
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 6 + this.glow * 25;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(this.char, 0, 0);
+        ctx.restore();
+      }
+
+      changeDirection() {
+        const newAngle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 1.2 + 0.6;
+        this.vx = Math.cos(newAngle) * speed;
+        this.vy = Math.sin(newAngle) * speed;
+        this.vRot = (Math.random() - 0.5) * 0.03;
+        this.glow = 1.0;
+      }
+    }
+
+    const symbols = Array.from({ length: 14 }, () => new FloatingSymbol());
+
+    /* Precise Single-Symbol Click Detection */
+    window.addEventListener('click', (e) => {
+      const clickX = e.clientX;
+      const clickY = e.clientY;
+
+      symbols.forEach(sym => {
+        const dist = Math.hypot(sym.x - clickX, sym.y - clickY);
+        if (dist <= sym.size * 0.9) {
+          sym.changeDirection();
+        }
+      });
+    });
+
+    function animate() {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      symbols.forEach(sym => {
+        sym.update();
+        sym.draw();
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    /* Verification & Cookie logic */
+    function toggleEnterButton() {
+      const ageCheck = document.getElementById('ageCheck');
+      const countryCheck = document.getElementById('countryCheck');
+      const enterBtn = document.getElementById('enterBtn');
+      if (ageCheck.checked && countryCheck.checked) {
+        enterBtn.removeAttribute('disabled');
+      } else {
+        enterBtn.setAttribute('disabled', 'true');
+      }
+    }
+
+    function acceptAge() {
+      const ageCheck = document.getElementById('ageCheck');
+      const countryCheck = document.getElementById('countryCheck');
+      if (ageCheck.checked && countryCheck.checked) {
+        document.getElementById('ageGate').style.display = 'none';
+        sessionStorage.setItem('ageVerified', 'true');
+        
+        if (localStorage.getItem('cookiesAccepted') !== 'true') {
+          document.getElementById('cookieBanner').style.display = 'block';
+        }
+      }
+    }
+
+    function denyAge() {
+      window.location.href = 'https://www.google.com';
+    }
+
+    function acceptCookies() {
+      localStorage.setItem('cookiesAccepted', 'true');
+      document.getElementById('cookieBanner').style.display = 'none';
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      if (sessionStorage.getItem('ageVerified') === 'true') {
+        document.getElementById('ageGate').style.display = 'none';
+        if (localStorage.getItem('cookiesAccepted') !== 'true') {
+          document.getElementById('cookieBanner').style.display = 'block';
+        }
+      }
+    });
+
+    /* View Switcher */
+    function switchView(viewName) {
+      document.querySelectorAll('.view-section').forEach(view => {
+        view.classList.remove('active');
+      });
+      if (viewName === 'main') {
+        document.getElementById('main-view').classList.add('active');
+      } else if (viewName === 'terms') {
+        document.getElementById('terms-view').classList.add('active');
+      } else if (viewName === 'gambleaware') {
+        document.getElementById('gambleaware-view').classList.add('active');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    /* Tabs */
+    function switchTab(tabName, event) {
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      if (tabName === 'casino') {
+        document.getElementById('casino-tab').classList.add('active');
+        event.currentTarget.classList.add('active');
+      } else if (tabName === 'cs2') {
+        document.getElementById('cs2-tab').classList.add('active');
+        event.currentTarget.classList.add('active');
+      }
+    }
+
+    /* Toast Notification */
+    let toastTimeout;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2400);
+    }
+
+    function copyCode(codeText, element) {
+      const upperCode = codeText.toUpperCase();
+      
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(upperCode).then(() => {
+          triggerCopySuccess(upperCode, element);
+        }).catch(() => {
+          fallbackCopyText(upperCode, element);
+        });
+      } else {
+        fallbackCopyText(upperCode, element);
+      }
+    }
+
+    function fallbackCopyText(code, element) {
+      const textArea = document.createElement("textarea");
+      textArea.value = code;
+      textArea.style.position = "fixed";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        triggerCopySuccess(code, element);
+      } catch (err) {
+        console.error('Copy failed', err);
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function triggerCopySuccess(code, element) {
+      const hintSpan = element.querySelector('.copy-hint');
+      const originalText = hintSpan.textContent;
+      hintSpan.textContent = 'COPIED!';
+      hintSpan.style.background = '#10b981';
+      hintSpan.style.color = '#fff';
+      
+      showToast(`Promo code "${code}" copied!`);
+
+      setTimeout(() => {
+        hintSpan.textContent = originalText;
+        hintSpan.style.background = '';
+        hintSpan.style.color = '';
+      }, 2000);
+    }
+
+    /* Scroll to Top */
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        scrollToTopBtn.classList.add('visible');
+      } else {
+        scrollToTopBtn.classList.remove('visible');
+      }
+    });
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
